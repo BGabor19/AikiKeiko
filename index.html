@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiki-Keiko — Aikido szeminárium sorozat</title>
+<meta name="description" content="Aiki-Keiko: évtizedes aikido szemináriumok. Történet, közelgő alkalmak, jelentkezés.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,500&family=Noto+Serif:wght@400;600&family=Noto+Sans:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --paper:        #F1EAD9;   /* washi papír alapszín */
+    --paper-deep:   #E6DABF;   /* mélyebb papír árnyalat, szekció-váltáshoz */
+    --ink:          #201C18;   /* tus-fekete, meleg tónusú */
+    --ink-soft:     #4B463D;   /* lágyabb tus, futószöveghez */
+    --ink-faint:    rgba(32,28,24,0.16);   /* halvány vonalak */
+    --seal:         #9C3223;   /* pecsét-vermilion */
+    --seal-soft:    rgba(156,50,35,0.10);
+    --paper-shadow: rgba(32,28,24,0.08);
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body:    'Noto Serif', serif;
+    --font-label:   'Noto Sans', sans-serif;
+
+    --container: 1120px;
+    --edge: clamp(20px, 6vw, 72px);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* halvány papírszemcse - tiszta CSS/SVG zaj, nincs szükség külső képre */
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    pointer-events:none;
+    opacity:0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.03 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    z-index: 1;
+  }
+
+  img{ max-width:100%; height:auto; display:block; }
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--edge);
+  }
+
+  h1,h2,h3{
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--seal);
+  }
+  .eyebrow::before{
+    content:"";
+    width: 14px; height:1px;
+    background: var(--seal);
+    display:inline-block;
+  }
+
+  .lede{
+    font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+    color: var(--ink-soft);
+    max-width: 54ch;
+  }
+
+  /* ============ GOMBOK ============ */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    padding: 0.95em 1.7em;
+    border-radius: 2px;
+    text-decoration:none;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .btn-primary{
+    background: var(--ink);
+    color: var(--paper);
+    box-shadow: 3px 3px 0 var(--seal-soft);
+  }
+  .btn-primary:hover{ transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--seal-soft); }
+  .btn-ghost{
+    background: transparent;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink-faint);
+    padding-left:0; padding-right:0;
+    border-radius:0;
+  }
+  .btn-ghost:hover{ border-color: var(--seal); color: var(--seal); }
+
+  /* ============ NAV ============ */
+  header.site{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(241,234,217,0.86);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--ink-faint);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px var(--edge);
+  }
+  .brand{
+    display:flex; align-items:center; gap:.6em;
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: 1.35rem;
+    text-decoration:none;
+    letter-spacing: 0.01em;
+  }
+  .brand svg{ width:28px; height:28px; }
+  .nav-links{
+    display:flex; gap: clamp(16px, 3vw, 40px);
+    font-family: var(--font-label);
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{ text-decoration:none; color: var(--ink-soft); }
+  .nav-links a:hover{ color: var(--seal); }
+  .nav-links li:last-child a{
+    color: var(--ink); font-weight:600;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    padding: clamp(60px, 12vw, 130px) var(--edge) clamp(70px, 10vw, 110px);
+    overflow:hidden;
+  }
+  .hero-grid{
+    max-width: var(--container);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items:center;
+    gap: 40px;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.03;
+    font-weight: 600;
+  }
+  .hero h1 em{
+    font-style: italic;
+    font-weight:500;
+    color: var(--seal);
+  }
+  .hero .eyebrow{ margin-bottom: 22px; }
+  .hero .lede{ margin: 26px 0 36px; }
+  .hero-cta{ display:flex; gap: 20px; flex-wrap:wrap; align-items:center; }
+
+  .ensō-stage{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    min-height: 260px;
+  }
+  .ensō-stage svg{ width: min(420px, 100%); height:auto; }
+  .ensō-stroke{
+    fill:none;
+    stroke: var(--ink);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 2.6s cubic-bezier(.5,0,.15,1) 0.3s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+
+  @media (prefers-reduced-motion: reduce){
+    .ensō-stroke{ animation: none; stroke-dashoffset:0; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ============ ECSETVONÁS ELVÁLASZTÓ ============ */
+  .brush-divider{
+    width:100%; height:34px;
+    display:block;
+    opacity:0.55;
+  }
+  .brush-divider path{ stroke: var(--ink); stroke-width:2; fill:none; stroke-linecap:round; }
+
+  /* ============ SZEKCIÓ ÁLTALÁNOS ============ */
+  section{ padding: clamp(56px, 9vw, 100px) 0; position:relative; }
+  .section-alt{ background: var(--paper-deep); }
+  .section-head{ max-width: 640px; margin-bottom: clamp(34px, 5vw, 56px); }
+  .section-head h2{ font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-top: 14px; }
+
+  /* ============ TÖRTÉNET / IDŐVONAL ============ */
+  .story{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items:start;
+  }
+  .story .lede{ max-width: none; }
+  .story p + p{ margin-top: 1.1em; }
+
+  .timeline{ list-style:none; margin:0; padding:0; border-left: 1px solid var(--ink-faint); }
+  .timeline li{
+    position:relative;
+    padding: 4px 0 30px 30px;
+  }
+  .timeline li:last-child{ padding-bottom:0; }
+  .timeline .mark{
+    position:absolute; left:-8px; top:6px;
+    width:15px; height:15px;
+  }
+  .timeline .mark svg{ width:100%; height:100%; }
+  .timeline .mark svg path{ stroke: var(--seal); stroke-width:6; fill:none; stroke-linecap:round; }
+  .timeline .year{
+    font-family: var(--font-label); font-weight:600;
+    font-size:0.8rem; letter-spacing:0.08em; color: var(--seal);
+    display:block; margin-bottom:4px;
+  }
+  .timeline h3{ font-size: 1.15rem; font-weight:600; margin-bottom: 4px; }
+  .timeline p{ color: var(--ink-soft); font-size: 0.96rem; margin:0; }
+
+  /* ============ KÖZELGŐ SZEMINÁRIUM ============ */
+  .seminar-card{
+    background: var(--paper);
+    border: 1px solid var(--ink-faint);
+    padding: clamp(28px, 5vw, 52px);
+    display:grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items:center;
+    position:relative;
+  }
+  .seminar-card::before{
+    content:"";
+    position:absolute; top:14px; right:14px;
+    width:52px; height:52px;
+    background: var(--seal);
+    -webkit-mask: radial-gradient(circle at center, #000 62%, transparent 64%);
+            mask: radial-gradient(circle at center, #000 62%, transparent 64%);
+    opacity:.9;
+  }
+  .seminar-date{
+    font-family: var(--font-display);
+    font-weight:600;
+    line-height:1;
+    text-align:center;
+  }
+  .seminar-date .day{ font-size: clamp(2.6rem,5vw,3.6rem); display:block; }
+  .seminar-date .month{
+    font-family: var(--font-label); font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; font-size:0.78rem; color: var(--seal);
+  }
+  .seminar-body h3{ font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-bottom:8px; }
+  .seminar-meta{
+    display:flex; flex-wrap:wrap; gap: 8px 22px;
+    font-family: var(--font-label); font-size:0.85rem; color: var(--ink-soft);
+    margin: 12px 0 0;
+    list-style:none; padding:0;
+  }
+  .seminar-meta li::before{ content:"— "; color: var(--ink-faint); }
+
+  /* ============ OKTATÓK ============ */
+  .instructors{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 34px;
+  }
+  .instructor{ text-align:left; }
+  .avatar{
+    width:100%; aspect-ratio: 1/1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(32,28,24,0.10), transparent 60%),
+      var(--paper-deep);
+    border: 1px solid var(--ink-faint);
+    margin-bottom: 18px;
+    position:relative;
+    overflow:hidden;
+  }
+  
+  /* A kép kitöltse a kört torzulás nélkül */
+ .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  }
+  .avatar svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .instructor h3{ font-size:1.25rem; margin-bottom:2px; }
+  .instructor .grade{
+    font-family: var(--font-label); font-size:0.78rem; letter-spacing:.08em;
+    color: var(--seal); text-transform:uppercase; display:block; margin-bottom:10px;
+  }
+  .instructor p{ color: var(--ink-soft); font-size:0.95rem; margin:0; }
+
+  /* ============ ARCHÍVUM / GALÉRIA ============ */
+  .archive-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .archive-item{
+    aspect-ratio: 3/4;
+    background: var(--paper-deep);
+    border: 1px solid var(--ink-faint);
+    position:relative;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+  }
+  .archive-item img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  }
+  .archive-item::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(135deg, transparent 0 10px, var(--ink-faint) 10px 11px);
+    opacity:.5;
+  }
+  .archive-item span{
+    position:relative;
+    font-family: var(--font-label); font-size:0.72rem; letter-spacing:.06em;
+    padding: 10px 12px; color: var(--ink-soft);
+    background: linear-gradient(to top, var(--paper-deep) 40%, transparent);
+    width:100%;
+  }
+  .archive-note{
+    margin-top: 22px;
+    font-size:0.9rem; color: var(--ink-soft);
+    font-family: var(--font-label);
+  }
+  
+  /* ============ ARCHÍVUM KIEGÉSZÍTŐK: korábbi oktatók + YouTube ============ */
+  .archive-sub{ margin-top: 56px; }
+  .archive-sub-head{ margin-bottom: 20px; }
+  .archive-sub-head h3{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  }
+  .table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .instructor-table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 0.96rem;
+  }
+  .instructor-table th{
+    text-align:left;
+    font-family: var(--font-label);
+    font-weight:600;
+    font-size:0.74rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--seal);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--ink);
+    white-space:nowrap;
+  }
+  .instructor-table td{
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--ink-faint);
+    color: var(--ink-soft);
+  }
+  .instructor-table tr td:first-child{ color: var(--ink); font-weight:600; }
+  .instructor-table tr:hover td{ background: var(--paper); }
+
+  .youtube-card{
+    display:flex; align-items:center; gap:22px;
+    background: var(--paper);
+    border: 1px solid var(--ink-faint);
+    padding: 26px 28px;
+    text-decoration:none;
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .youtube-card:hover{ transform: translateY(-3px); border-color: var(--seal); }
+  .youtube-card .yt-icon{
+    flex:none; width:52px; height:52px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    background: var(--seal-soft);
+  }
+  .youtube-card .yt-icon svg{ width:22px; height:22px; }
+  .youtube-card h4{
+    font-family: var(--font-display); font-weight:600;
+    font-size:1.15rem; margin:0 0 4px; color: var(--ink);
+  }
+  .youtube-card .link-label{ font-family: var(--font-label); font-size:0.85rem; color: var(--ink-soft); }
+  .youtube-card .link-label span{ border-bottom:1px solid var(--ink-faint); }
+  .youtube-card:hover .link-label span{ border-color: var(--seal); color: var(--seal); }
+
+  .video-embed{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--ink-faint);
+    background: var(--paper-deep);
+    margin-top: 24px;
+    overflow:hidden;
+  }
+  .video-embed iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+  }
+  
+  /* ============ JELENTKEZÉS ============ */
+  .cta-panel{
+    background: var(--ink);
+    color: var(--paper);
+    padding: clamp(48px, 8vw, 88px) var(--edge);
+    text-align:center;
+  }
+  .cta-panel h2{ color: var(--paper); font-size: clamp(2rem, 4vw, 3rem); }
+  .cta-panel .lede{ color: rgba(241,234,217,0.75); margin: 18px auto 34px; }
+  .cta-panel .btn-primary{ background: var(--paper); color: var(--ink); box-shadow:none; }
+  .cta-panel .btn-primary:hover{ background: var(--seal); color: var(--paper); }
+
+  /* ============ FOOTER ============ */
+  footer{
+    padding: 46px var(--edge) 60px;
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;
+    font-family: var(--font-label); font-size:0.82rem; color: var(--ink-soft);
+  }
+  .seal-stamp{ width:46px; height:46px; opacity:.85; }
+  .footer-brand{ display:flex; align-items:center; gap:14px; }
+  .footer-brand strong{ font-family: var(--font-display); font-size:1.15rem; color: var(--ink); }
+
+  /* ============ RESPONZÍV TÖRÉSPONTOK ============ */
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .ensō-stage{ order:-1; min-height:180px; }
+    .ensō-stage svg{ width:min(260px,70%); }
+    .story{ grid-template-columns: 1fr; }
+    .instructors{ grid-template-columns: 1fr 1fr; }
+    .archive-grid{ grid-template-columns: repeat(2,1fr); }
+    .seminar-card{ grid-template-columns: 1fr; text-align:center; }
+    .seminar-meta{ justify-content:center; }
+  }
+
+  @media (max-width: 620px){
+    .nav-links{ gap:14px; font-size:0.78rem; }
+    .instructors{ grid-template-columns: 1fr; }
+    .archive-grid{ grid-template-columns: 1fr 1fr; }
+    footer{ flex-direction:column; align-items:flex-start; }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 4 C 30 4 35 12 34 21 C 33 30 25 36 16 34" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      Aiki-Keiko
+    </a>
+    <ul class="nav-links">
+      <li><a href="#tortenet">Történet</a></li>
+      <li><a href="#szeminarium">Következő alkalom</a></li>
+      <li><a href="#oktatok">Oktatók</a></li>
+      <li><a href="#archivum">Archívum</a></li>
+      <li><a href="#jelentkezes">Jelentkezés</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-grid wrap" style="padding:0;">
+      <div>
+        <span class="eyebrow">Aiki-Keiko: baráti aikido szeminárium sorozat</span>
+        <h1>Aiki no Wa: az Aiki köre,<br> ami <em>sosem</em><br> zárul le.</h1>
+        <p class="lede">
+          Az Aiki-Keiko évtizedes baráti kezdeményezésből nőtt szemináriumsorozat:
+          minden januárban évnyitóval, minden szeptemberben szezonnyitóval,
+          három oktatóval és egy egyre bővülő közösséggel.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#jelentkezes">Jelentkezés a szemináriumra</a>
+          <a class="btn btn-ghost" href="#tortenet">A történetünk</a>
+        </div>
+      </div>
+      <div class="ensō-stage" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <path class="ensō-stroke"
+            d="M 200 345
+             C 100 345 55 270 60 195
+             C 64 122 122 65 205 62
+             C 282 59 338 112 342 187
+             C 345 250 310 305 250 332" />
+            <!--
+            d="M 200 55
+               C 300 55 345 130 340 205
+               C 336 278 278 335 195 338
+               C 118 341 62 288 58 213
+               C 55 150 90 95 150 68" />  
+             -->
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <svg class="brush-divider wrap" viewBox="0 0 1120 34" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M10 17 C 250 5, 500 29, 760 14 S 1080 20 1110 17"/>
+  </svg>
+
+  <!-- ============ TÖRTÉNET ============ -->
+  <section id="tortenet">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">A kezdetek</span>
+        <h2>Egy baráti kör, ami szemináriummá nőtte ki magát</h2>
+      </div>
+      <div class="story">
+        <div>
+          <p>
+            Nem egy szervezet döntése hozta létre az Aiki-Keiko-t, hanem néhány gyakorló
+            elhatározása, hogy évente párszor összegyűjti a barátait egy közös napra.
+            Kezdetben egy-két oktató és egy maroknyi résztvevő — mára
+            visszatérő hagyomány, amit ugyanaz a szellemiség tart életben:
+            a nyitottság és a közös gyakorlás öröme.
+          </p>
+          <p>
+            Az elmúlt évtizedekben a szemináriumok formája alig változott: egy nap,
+            három oktató, és annyi résztvevő, amennyit a terem és a barátság elbír.
+            Most először adunk ennek a hagyománynak nevet és arcot — ez az Aiki-Keiko.
+          </p>
+          <p>A sorozat küldetése:
+              Azon túl, hogy edzünk, tanuljunk, jól érezzük magunkat és lendületet adjunk az új évnek/szezonnak :), 
+              - szeretnénk erősíteni a közösségi kapcsolatokat,
+              - szakmai célunk, hogy a dojok nyitott, érdeklődő tagjai kapjanak egy kis ízelítőt az oktatók által gyakorolt koncepcióból = tágítsuk a saját aikido buborékunkat.
+              Meggyőződésünk szerint ez hasznára válik azoknak, akik igyekeznek nyitottan tanulmányozni az aikido világát.
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2011. Kezdetek</span>
+            <h3>Az első baráti szeminárium</h3>
+            <p>Néhány fiatal oktató (Virág Imre, Juhász Gergely, Balázs Gábor) elhatározza, hogy évente párszor közös gyakorlást tart.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2014. Kezd kialakulni a struktúra</span>
+            <h3>Első évnyitó szeminárium</h3>
+            <p>Torma Antal felvetésére és együttműködésével kezdődött el a kifejezett évnyitó szemináriumok szervezése. Rendszeressé válik további oktatók meghívása is elsőként az MKDE köreiből. Tudatosan igyekeztünk lehetőséget biztosítani fiatalabb oktatóknak is.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2016. Nyitás éve</span>
+            <h3>Különböző aikido iskolák oktatóinak bevonása</h3>
+            <p>Innentől kezdve mindig próbálunk a meghívott oktatók közül legalább egyet kifejezetten nem Kobayashi-s vonalról hívni.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2024. Covid utáni restart</span>
+            <h3>Újraindulnak a baráti gyakorlások</h3>
+            <p>Dénes István társszervezőként és oktatóként is bekapcsoólódik a szervezői munkába.</p>
+          </li>
+          <li>
+            <span class="mark"><svg viewBox="0 0 20 20"><path d="M2 10 C2 4 18 4 18 10 C18 16 2 16 2 10"/></svg></span>
+            <span class="year">2026. Aiki-Keiko</span>
+            <h3>Megszületik az Aiki-Keiko</h3>
+            <p>A sorozat saját nevet, arculatot és otthont kap. A baráti gyakorlások a közösség és az oktatók érésével egyre inkább műhelymunka jelleget öltenek.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KÖZELGŐ SZEMINÁRIUM ============ -->
+  <section id="szeminarium" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Következő alkalom</span>
+        <h2>Szezonnyitó szeminárium</h2>
+      </div>
+      <div class="seminar-card">
+        <div class="seminar-date">
+          <!-- ÍRD ÁT a tényleges dátumra -->
+          <span class="day">13.</span>
+          <span class="month">Szeptember</span>
+        </div>
+        <div class="seminar-body">
+          <h3>Egynapos szeminárium — három oktatóval</h3>
+          <p style="color:var(--ink-soft); margin:0;">
+            <!-- ÍRD ÁT a helyszínt és a rövid leírást -->
+            Egy nap, közös gyakorlás, régi és új arcok. A részletes program és a helyszín
+            hamarosan frissül — a jelentkezés már most megnyitható.
+          </p>
+          <ul class="seminar-meta">
+            <li>Helyszín: hamarosan</li>
+            <li>3 oktató</li>
+            <li>Minden szint</li>
+          </ul>
+        </div>
+        <a class="btn btn-primary" href="#jelentkezes">Jelentkezés</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OKTATÓK ============ -->
+  <section id="oktatok">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Kik vezetik</span>
+        <h2>A három oktató</h2>
+      </div>
+      <div class="instructors">
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+            <img src="images/oktatok/DenesIstvan.jpg" alt="Dénes István 4. dan">
+          </div>
+          <h3><!-- Oktató neve -->Dénes István</h3>
+          <span class="grade"><!-- pl. dan fokozat -->4. Dan fokozat</span>
+          <p>Rövid bemutatkozás: a budapesti Zugoly Aikido Dojo alapítója és vezetője. A rendezvénysorozat társszervezője.</p>
+        </article>
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+             <img src="images/oktatok/JuhaszGergely.jpg" alt="Juhász Gergely 5. dan">
+          </div>
+          <h3>Juhász Gergely</h3>
+          <span class="grade">5. Dan fokozat</span>
+          <p>Rövid bemutatkozás: főállású aikidóoktató, az Aikido Arts alapítója és vezetője, aki 2007 óta építi iskoláját és közösségét Budapesten és környékén. Számos hazai és nemzetközi mestertől tanult, munkájában kiemelt szerepet kap a magas színvonalú technikai oktatás és a befogadó dojo-légkör megteremtése. Az Aikido Arts vezetőjeként elkötelezetten dolgozik azon, hogy az aikidó értékeit gyermekek és felnőttek számára egyaránt közvetítse.</p>
+        </article>
+        <article class="instructor">
+          <div class="avatar" aria-hidden="true">
+            <img src="images/oktatok/BaloghGabor.jpg" alt="Balogh Gábor 5. dan">
+          </div>
+          <h3>Dr. Balogh Gábor</h3>
+          <span class="grade">5. Dan fokozat</span>
+          <p>Rövid bemutatkozás: a pécsi Takuma Dojo alapítója és vezetője, aki 2009 óta irányítja a dojo szakmai munkáját és közösségét. Az oktatásban a Kobayashi Yasuo-féle aikidó szellemiségét képviseli, nagy hangsúlyt fektetve a technikai pontosságra, a folyamatos fejlődésre és a támogató dojo-légkör kialakítására. A Takuma Dojo vezetőjeként hosszú évek óta aktív szerepet vállal a hazai aikidóéletben, rendszeresen szervez edzőtáborokat és népszerűsíti az aikidót Pécsen és a régióban.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCHÍVUM ============ -->
+  <section id="archivum" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Visszatekintés</span>
+        <h2>Korábbi plakátok és felvételek</h2>
+      </div>
+      <div class="archive-grid">
+        <div class="archive-item"><img src="images/archivum/202601.jpg" alt="2026-os évnyitó baráti aikido gyakorlás plakátja"><span>2026. januári évnyitó baráti aikido gyakorlás plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/202509.jpg" alt="2025-ös szezonnyitó baráti aikido gyakorlás plakátja"><span>2025. szeptemberi szezonnyitó baráti aikido gyakorlás plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/202501.jpg" alt="2025-ös évnyitó baráti aikido gyakorlás plakátja"><span>2025. januári évnyitó baráti aikido gyakorlás plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/202409.jpg" alt="2024-es szezonnyitó baráti aikido gyakorlás plakátja"><span>2024. szeptemberi szezonnyitó baráti aikido gyakorlás plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/202401.jpg" alt="2024-es évnyitó baráti aikido gyakorlás plakátja"><span>2024. januári évnyitó baráti aikido gyakorlás plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201607.jpg" alt="2016-os baráti keiko plakátja"><span>2016. júliusi baráti keiko plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201606.jpg" alt="2016-os baráti keiko plakátja"><span>2016. júniusi baráti keiko plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201601.jpg" alt="2016-os jótékonysági tábor plakátja"><span>2016. januári ZM jótékonysági tábor plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201509.jpg" alt="2015-ös szezonnyitó plakátja"><span>2015. szeptemberi szezonnyitó plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201507.jpg" alt="2015-ös szeminárium plakátja"><span>2015. júliusi szeminárium plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201505.jpg" alt="2015-ös baráti keiko plakátja"><span>2015. májusi baráti keiko plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201501.jpg" alt="2015-ös újévi edzőtábor plakátja"><span>2015. januári újévi edzőtábor plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201409.jpg" alt="2014-es szezonnyitó aikido szeminárium plakátja"><span>2014. szeptemberi szezonnyitó aikido szeminárium plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201406.jpg" alt="2014-es Aikido Keiko plakátja"><span>2014. júniusi Aikido Kobayashi Keiko plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201401.jpg" alt="2014-es Asagao szeminárium plakátja"><span>2014. januári Asagao szeminárium plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201307.jpg" alt="2013-as szeminárium plakátja"><span>2013. júliusi szeminárium plakátja</span></div>
+        <div class="archive-item"><img src="images/archivum/201210.jpg" alt="2012-es szeminárium plakátja"><span>2012. novemberi szeminárium plakátja</span></div>
+      </div>
+      <p class="archive-note">
+        2011-ben kezdődtek a három dojo közös baráti gyakorlásai. Nem mindegyiket hirdettük, nem mindegyikhez készült plakát. Reményeink szerint ez a kis kollekció így is ad egy kis történeti áttekintést.
+      </p>
+        <!-- ============ VISSZATEKINTÉS ============ -->
+        <div class="archive-sub">
+        <div class="archive-sub-head">
+          <span class="eyebrow">Visszatekintés</span>
+          <h3>Korábbi oktatók</h3>
+        </div>
+        <div class="table-scroll">
+          <table class="instructor-table">
+            <thead>
+              <tr>
+                <th>Név</th>
+                <th>Dojo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ÍRD ÁT / bővítsd a tényleges nevekkel, dojókkal, időszakokkal -->
+               <tr><td>Gollob Szabolcs — 6. dan Aikikai</td><td><a href="https://aikidoiskola.hu/index.html" target="_blank" rel="noopener">Aikido Tenjinchi dojo</a></td></tr>
+              <tr><td>Hochstrasser Norbert — 6. dan Aikikai</td><td><a href="https://www.sas-aikido.hu/" target="_blank" rel="noopener">Shurenkan dojo</a></td></tr>
+              <tr><td>Juhász Csaba — 6. dan Aikikai</td><td><a href="https://zanshin.hu/" target="_blank" rel="noopener">Zanshin dojo</a></td></tr>
+              <tr><td>Karászi Sándor — 6. dan Aikikai</td><td><a href="https://www.mushinkai.eu/hu/" target="_blank" rel="noopener">Mushinkai dojo</a></td></tr>
+              <tr><td>Magyar László — 6. dan Aikikai</td><td><a href="http://www.zentaimitama.hu/drupal/" target="_blank" rel="noopener">Zentai Mitama dojo</a></td></tr>
+              <tr><td>Rékai Gábor — 6. dan Aikikai</td><td><a href="https://www.sansuikai.hu/" target="_blank" rel="noopener">Konki Aikido dojo</a></td></tr>
+              <tr><td>Szabó Balázs — 6. dan Aikikai</td><td>Somogyi dojo</td></tr>
+              <tr><td>Balázs Gábor — 5. dan Aikikai</td><td><a href="https://budapestaikido.hu/" target="_blank" rel="noopener">Aikido Budapest Musubi dojo</a></td></tr>
+              <tr><td>Dr. Balogh Gábor — 5. dan Aikikai</td><td><a href="https://takumadojo.blogspot.com/" target="_blank" rel="noopener">Takuma dojo</a></td></tr>
+              <tr><td>Bernáth Zsolt — 5. dan Aikikai</td><td><a href="http://www.zentaimitama.hu/drupal/" target="_blank" rel="noopener">Zentai Mitama dojo</a></td></tr>
+              <tr><td>Dr. Havasi Tamás — 5. dan Aikikai</td><td><a href="https://aikidoesztergom.hu/" target="_blank" rel="noopener">Tada Ima dojo</a></td></tr>
+              <tr><td>Füleky András — 5. dan Aikikai</td><td>Aikido Seijaku Dojo</td></tr>
+              <tr><td>Imrei Tibor — 5. dan Aikikai</td><td><a href="https://www.imreibudo.com/" target="_blank" rel="noopener">Imrei budo</a></td></tr>
+              <tr><td>Juhász Gergely — 5. dan Aikikai</td><td><a href="https://aikidoarts.hu/" target="_blank" rel="noopener">Aikido Arts dojo</a></td></tr>
+              <tr><td>Karácsony Zoltán — 5. dan Aikikai</td><td><a href="https://www.facebook.com/honshindojo" target="_blank" rel="noopener">Honshin dojo</a></td></tr>
+              <tr><td>Kárpáti Gábor — 5. dan Aikikai</td><td><a href="https://aikido.hu/" target="_blank" rel="noopener">Misogi Aikido dojo</a></td></tr>
+              <tr><td>Tóth Imre — 5. dan Aikikai</td><td><a href="https://www.szilvavirag.hu/" target="_blank" rel="noopener">Ume no Hana dojo</a></td></tr>
+              <tr><td>Zsiga Sándor — 5. dan Aikikai</td><td>Aikido Shinmeikan Dojo</td></tr>
+              <tr><td>Adrián Zoltán — 4. dan Aikikai</td><td><a href="https://www.facebook.com/profile.php?id=100054582573388" target="_blank" rel="noopener">Asagao Aikido Dojo</a></td></tr>
+              <tr><td>Aigner Zoltán — 4. dan Aikikai</td><td><a href="https://www.aikidodojo.hu/" target="_blank" rel="noopener">Kyojun Aikido-Iaido Dojo</a></td></tr>
+              <tr><td>Berek József — 4. dan Aikikai</td><td><a href="https://viharsarokbudose.hu/Aikido.html" target="_blank" rel="noopener">Viharsarok Aikido dojo</a></td></tr>
+              <tr><td>Dénes István — 4. dan Aikikai</td><td><a href="https://www.facebook.com/profile.php?id=61564028844270" target="_blank" rel="noopener">Zugoly Aikido dojo</a></td></tr>
+              <tr><td>Fekete Máté — 4. dan Aikikai</td><td><a href="http://www.zentaimitama.hu/drupal/" target="_blank" rel="noopener">Zentai Mitama dojo</a></td></tr>
+              <tr><td>Komsa Ildikó — 4. dan Aikikai</td><td><a href="https://www.facebook.com/profile.php?id=61564028844270" target="_blank" rel="noopener">Zugoly Aikido dojo</a></td></tr>
+              <tr><td>Kurucz Erika — 4. dan Aikikai</td><td>Honshin dojo</td></tr>
+              <tr><td>Molnár Jenő — 4. dan Aikikai</td><td></td></tr>
+              <tr><td>Németh Ferenc - 4. dan Aikikai</td><td>Yurusu Aikido Dojo</td></tr>
+              <tr><td>Uhrin Béla — 4. dan Aikikai</td><td><a href="http://www.gyulaiaikido.hu/hu" target="_blank" rel="noopener">Aki Shiro dojo</a></td></tr>
+              <tr><td>Végh István — 4. dan Aikikai</td><td><a href="https://budapestaikido.hu/" target="_blank" rel="noopener">Aikido Budapest Musubi dojo</a></td></tr>
+              <tr><td>Virág Imre — 4. dan Aikikai</td><td>Shoshinkan dojo</td></tr>
+              <tr><td>Áy János — 3. dan Aikikai</td><td><a href="https://www.facebook.com/HinodeAikidoDojo" target="_blank" rel="noopener">Hinode Aikido dojo</a></td></tr>
+              <tr><td>Debreceni Péter — 3. dan Aikikai</td><td>Somogyi dojo</td></tr>
+              <tr><td>Fanta Sándor — 3. dan Aikikai</td><td>Rengakukan dojo</td></tr>
+              <tr><td>Spránitz Tamás — 3. dan Aikikai</td><td><a href="http://www.zentaimitama.hu/drupal/" target="_blank" rel="noopener">Zentai Mitama Tobukan dojo</a></td></tr>
+              <tr><td>Szente Sándor — 3. dan Aikikai</td><td></td></tr>
+              <tr><td>Kukusik Éva — 2. dan Aikikai</td><td><a href="https://bt-aikido.hu/" target="_blank" rel="noopener">Kenshuu aikido dojo</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="archive-sub">
+        <div class="archive-sub-head">
+          <span class="eyebrow">Felvételek</span>
+          <h3>YouTube csatorna</h3>
+        </div>
+        <a class="youtube-card" href="https://youtube.com/playlist?list=PL8ps91iwNp9c9OdW4RowXVBN8DwlcdhHe&si=RacWH_ulUmI4J5VV" target="_blank" rel="noopener">
+          <span class="yt-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--seal)" stroke-width="2">
+              <path d="M9 8l7 4-7 4V8z" fill="var(--seal)" stroke="none"/>
+              <rect x="2.5" y="5" width="19" height="14" rx="3"/>
+            </svg>
+          </span>
+          <div>
+            <h4>Aiki-Keiko felvételek</h4>
+            <span class="link-label"><span>Lejátszási lista megnyitása</span></span>
+          </div>
+        </a>
+       <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/videoseries?list=PL8ps91iwNp9c9OdW4RowXVBN8DwlcdhHe"
+            title="Aiki-Keiko — YouTube lejátszási lista"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JELENTKEZÉS ============ -->
+  <section id="jelentkezes" class="cta-panel">
+    <div class="wrap" style="padding:0; max-width:640px; margin:0 auto;">
+      <span class="eyebrow" style="color:var(--paper);">Gyere el</span>
+      <h2>Jelentkezz a következő szemináriumra</h2>
+      <p class="lede">
+        A jelentkezés egy rövid űrlappal történik — pár adat, és foglaljuk is a helyed.
+      </p>
+      <!-- CSERÉLD LE a href-et a saját Google Form / jelentkezési link URL-jére -->
+      <a class="btn btn-primary" href="https://forms.gle/opFGvsBEUA2NiVCy5" target="_blank" rel="noopener">Jelentkezési űrlap megnyitása</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <svg class="seal-stamp" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="4" y="4" width="92" height="92" rx="6" fill="none" stroke="var(--seal)" stroke-width="4"/>
+      <path d="M30 60 C30 35 45 25 50 25 C55 25 70 35 70 60" fill="none" stroke="var(--seal)" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <strong>Aiki-Keiko</strong><br>
+      Aikido szeminárium sorozat — évnyitó januárban, szezonnyitó szeptemberben.
+    </div>
+  </div>
+  <div>
+    <!-- ÍRD ÁT a tényleges kapcsolati e-mail címre: kérdés, hogy mi ez, mert google csoportba csak tagok írhatnak -->
+    aikido-szeminariumok@googlegroups.com · © <span id="year"></span> Aiki-Keiko
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
