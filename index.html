@@ -453,6 +453,100 @@
   .seal-stamp{ width:46px; height:46px; opacity:.85; }
   .footer-brand{ display:flex; align-items:center; gap:14px; }
   .footer-brand strong{ font-family: var(--font-display); font-size:1.15rem; color: var(--ink); }
+  
+/* ============ AIKIKEIKO BLACKJACK ============ */
+  .bj-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items:start;
+  }
+  .bj-steps{
+    list-style:none; margin:0; padding:0;
+    counter-reset: bj;
+  }
+  .bj-steps li{
+    counter-increment: bj;
+    position:relative;
+    padding: 4px 0 26px 58px;
+    border-left: 1px solid var(--ink-faint);
+    margin-left: 18px;
+  }
+  .bj-steps li:last-child{ padding-bottom:0; }
+  .bj-steps li::before{
+    content: counter(bj);
+    position:absolute; left:-19px; top:0;
+    width:37px; height:37px;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--font-display); font-weight:600; font-size:1.25rem;
+    color: var(--paper);
+    background: var(--seal);
+    border-radius:50%;
+  }
+  .bj-steps h3{ font-size:1.2rem; margin-bottom:4px; }
+  .bj-steps p{ margin:0; color: var(--ink-soft); font-size:0.97rem; }
+ 
+  .bj-side{ display:grid; gap: 26px; }
+  .bj-photo{
+    margin:0;
+    border: 1px solid var(--ink-faint);
+    background: var(--paper-deep);
+    padding: 10px;
+  }
+  .bj-photo img{ width:100%; height:auto; display:block; }
+ 
+  .bj-card{
+    background: var(--paper);
+    border: 1px solid var(--ink-faint);
+    padding: 26px 28px;
+  }
+  .bj-card h3{ font-size:1.25rem; margin: 10px 0 14px; }
+  .bj-card p{ margin:0; color: var(--ink-soft); font-size:0.95rem; }
+ 
+  .bj-table{
+    width:100%; border-collapse:collapse; font-size:0.95rem;
+    border: 1.5px solid var(--ink);
+  }
+  .bj-table th{
+    text-align:left;
+    font-family: var(--font-label); font-weight:600;
+    font-size:0.72rem; letter-spacing:.1em; text-transform:uppercase;
+    color: var(--seal);
+    padding: 8px 10px;
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+  }
+  .bj-table td{
+    padding: 10px;
+    height: 2.6em;
+    border: 1px solid var(--ink);
+    color: var(--ink-soft);
+  }
+  .bj-table td:last-child, .bj-table th:last-child{ text-align:right; }
+  .bj-table tfoot td{
+    color: var(--ink); font-weight:600;
+    border-top: 1.5px solid var(--ink);
+    background: var(--paper-deep);
+  }
+  .bj-table tfoot td:last-child{
+    font-family: var(--font-display); font-size:1.3rem; color: var(--seal);
+  }
+  .bj-caption{ margin-top:12px !important; font-size:0.88rem !important; }
+ 
+  .bj-note{
+    margin-top: clamp(34px, 5vw, 56px);
+    padding: 22px 26px;
+    border-left: 3px solid var(--seal);
+    background: var(--seal-soft);
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  .bj-note strong{ color: var(--ink); }
+ 
+  @media (max-width: 900px){
+    .bj-grid{ grid-template-columns: 1fr; gap: 40px; }
+  }
+
 
   /* ============ RESPONZÍV TÖRÉSPONTOK ============ */
   @media (max-width: 900px){
@@ -785,6 +879,80 @@
       </div>
     </div>
   </section>
+  
+  
+<!-- ============ AIKIKEIKO BLACKJACK ============ -->
+<section id="blackjack">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Játék a szemináriumon</span>
+      <h2>AikiKeiko blackjack</h2>
+      <p class="lede" style="margin-top:16px;">
+        Szeminárium közben egy kis plusz játék: az edzés végén köszönd meg a közös gyakorlást az edzőpartnereidnek,
+        és gyűjts pontosan 21 pontot az aláírásaikkal.
+      </p>
+    </div>
+ 
+    <div class="bj-grid">
+ 
+      <ol class="bj-steps">
+        <li>
+          <h3>Lapot kapsz</h3>
+          <p>Minden résztvevő kap egy kis lapot, rajta egy táblázattal: név, fokozat, pont.</p>
+        </li>
+        <li>
+          <h3>Köszönet aláírással</h3>
+          <p>Edzés után, a közös gyakorlás megköszönésekor kérd meg az edzőpartneredet, hogy írja be a lapra a nevét és a fokozatát. Nem kell mindenkivel aláíriatni akivel gyakoroltál. Természetesen sokkal több emberrel is gyakorolhatsz, de csak 21 pontig írasd alá.</p>
+        </li>
+        <li>
+          <h3>Ki kitől gyűjt?</h3>
+          <p><strong>Kyu</strong> fokozatú résztvevők a <strong>dan</strong> fokozatúak aláírásait gyűjtik, a <strong>dan</strong> fokozatúak pedig a <strong>kyu</strong> fokozatúakéit.</p>
+        </li>
+        <li>
+          <h3>Pontosan 21 pont</h3>
+          <p>Minden aláírás annyi pontot ér, amennyi az aláíró fokozata (pl. 3. dan = 3 pont). Az edzésnap folyamán, több edzésen át gyűjtheted a pontokat. A cél pontosan 21: se több, se kevesebb.</p>
+        </li>
+        <li>
+          <h3>Leadás és sorsolás</h3>
+          <p>A szeminárium végén add le a lapot a szervezőknek. Azok között, akik pontosan 21 pontot gyűjtöttek, jelképes díjat sorsolunk ki.</p>
+        </li>
+      </ol>
+ 
+      <div class="bj-side">
+        <figure class="bj-photo">
+          <img src="images/AikiKeiko_Blackjack.jpg" alt="AikiKeiko blackjack: kitöltött aláírólap" loading="lazy">
+        </figure>
+        <div class="bj-card">
+          <span class="eyebrow">Példa</span>
+          <h3>Egy kitöltött lap</h3>
+          <table class="bj-table">
+            <thead>
+              <tr><th>Név</th><th>Fokozat</th><th>Pont</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Első aláíró</td><td>3. dan</td><td>3</td></tr>
+              <tr><td>Második aláíró</td><td>5. dan</td><td>5</td></tr>
+              <tr><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td></tr>
+            </tbody>
+            <tfoot>
+              <tr><td colspan="2">Összesen</td><td>8</td></tr>
+            </tfoot>
+          </table>
+          <p class="bj-caption">Ha egy 3. danos és egy 5. danos írt alá, az összesen 8 pont. Innen még 13 pont hiányzik a 21-hez.</p>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <p class="bj-note">
+      <strong>Szabadon felhasználható.</strong>
+      A játék ötlete más rendezvényeken is használható, csak egyet kérünk:
+      a játék neve maradjon <strong>AikiKeiko blackjack</strong>.
+    </p>
+  </div>
+</section>
+ 
 
   <!-- ============ JELENTKEZÉS ============ -->
   <section id="jelentkezes" class="cta-panel">
