@@ -320,6 +320,10 @@
     color: var(--seal); text-transform:uppercase; display:block; margin-bottom:10px;
   }
   .instructor p{ color: var(--ink-soft); font-size:0.95rem; margin:0; }
+  .instructor-points{ margin:0; padding-left:1.1em; color: var(--ink-soft); font-size:0.95rem; }
+  .instructor-points li{ margin-bottom:4px; }
+  .instructor p a, .instructor-points a{ border-bottom:1px solid var(--ink-faint); text-decoration:none; }
+  .instructor p a:hover, .instructor-points a:hover{ color: var(--seal); border-color: var(--seal); }
 
   /* ============ ARCHÍVUM / GALÉRIA ============ */
   .archive-grid{
@@ -699,25 +703,26 @@
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Következő alkalom</span>
-        <h2>Szezonnyitó szeminárium</h2>
+        <h2>Évnyitó szeminárium</h2>
       </div>
       <div class="seminar-card">
         <div class="seminar-poster">
-          <img src="images/plakatok/Szezonnyito_plakat_20260913_2.jpg" alt="Szezonnyitó szeminárium plakátja">
+          <img src="images/plakatok/Evnyito_plakat_20270103.jpg" alt="Évnyitó szeminárium plakátja, 2027. január 3.">
         </div>
         <div class="seminar-date">
           <!-- ÍRD ÁT a tényleges dátumra -->
-          <span class="day">13.</span>
-          <span class="month">Szeptember</span>
+          <span class="day">3.</span>
+          <span class="month">2027. Január</span>
         </div>
         <div class="seminar-body">
           <h3>Egynapos szeminárium — három oktatóval</h3>
           <p style="color:var(--ink-soft); margin:0;">
             <!-- ÍRD ÁT a helyszínt és a rövid leírást -->
-            Egy nap, közös gyakorlás, régi és új arcok. A jelentkezés már most megnyitható.
+            Egy nap, három edzés és egy beszélgetés Gollob Szabolccsal. A jelentkezés már most megnyitható.
           </p>
           <ul class="seminar-meta">
-            <li>Helyszín: Honvéd Judo terem</li>
+            <li>Helyszín: Budapest, Bikás park, Újbudai Sportcentrum</li>
+            <li>10:00–15:15</li>
             <li>3 oktató</li>
             <li>Minden szint</li>
           </ul>
@@ -737,27 +742,32 @@
       <div class="instructors">
         <article class="instructor">
           <div class="avatar" aria-hidden="true">
-            <img src="images/oktatok/DenesIstvan.jpg" alt="Dénes István 4. dan">
+            <img src="images/oktatok/BothJozsef.jpg" alt="Both József 4. dan">
           </div>
-          <h3><!-- Oktató neve -->Dénes István</h3>
-          <span class="grade"><!-- pl. dan fokozat -->4. Dan fokozat</span>
-          <p>Rövid bemutatkozás: a budapesti Zugoly Aikido Dojo alapítója és vezetője. A rendezvénysorozat társszervezője, az MKDE tagja és az MKDE technikai bizottságának tagja.</p>
+          <h3>Both József</h3>
+          <span class="grade">Aikikai 4. dan</span>
+          <p>Rövid bemutatkozás: a <a href="https://www.renseikandojo.hu/" target="_blank" rel="noopener">Renseikan Dojo</a> vezetője, az <a href="https://mkde.hu/hu" target="_blank" rel="noopener">MKDE</a> technikai bizottságának tagja.</p>
         </article>
         <article class="instructor">
           <div class="avatar" aria-hidden="true">
-             <img src="images/oktatok/JuhaszGergely.jpg" alt="Juhász Gergely 5. dan">
+            <img src="images/oktatok/GollobSzabolcs.jpg" alt="Gollob Szabolcs 6. dan">
           </div>
-          <h3>Juhász Gergely</h3>
-          <span class="grade">5. Dan fokozat</span>
-          <p>Rövid bemutatkozás: főállású aikidóoktató, az Aikido Arts alapítója és vezetője, aki 2007 óta építi iskoláját és közösségét Budapesten és környékén. Számos hazai és nemzetközi mestertől tanult, munkájában kiemelt szerepet kap a magas színvonalú technikai oktatás és a befogadó dojo-légkör megteremtése. Az Aikido Arts vezetőjeként elkötelezetten dolgozik azon, hogy az aikidó értékeit gyermekek és felnőttek számára egyaránt közvetítse.</p>
+          <h3>Gollob Szabolcs</h3>
+          <span class="grade">Aikikai Shihan, 6. dan</span>
+          <ul class="instructor-points">
+            <li>EBR OKUDEN – High Instructor</li>
+            <li>A magyarországi RAJI-BUDO Iskola és a <a href="https://aikidoiskola.hu/gollob-szabolcs.html" target="_blank" rel="noopener">Tenjinchi Dojo</a> vezetője</li>
+            <li>Az <a href="https://www.aikikai-hungary.hu/" target="_blank" rel="noopener">AIKIKAI HUNGARY</a> vizsgabizottságának tagja</li>
+            <li>Aikido, Iaido és Jodo mester</li>
+          </ul>
         </article>
         <article class="instructor">
           <div class="avatar" aria-hidden="true">
-            <img src="images/oktatok/BaloghGabor.jpg" alt="Balogh Gábor 5. dan">
+            <img src="images/oktatok/BalazsGabor.jpg" alt="Balázs Gábor 5. dan">
           </div>
-          <h3>Dr. Balogh Gábor</h3>
-          <span class="grade">5. Dan fokozat</span>
-          <p>Rövid bemutatkozás: a pécsi Takuma Dojo alapítója és vezetője, aki 2009 óta irányítja a dojo szakmai munkáját és közösségét. Az oktatásban a Kobayashi Yasuo-féle aikidó szellemiségét képviseli, nagy hangsúlyt fektetve a technikai pontosságra, a folyamatos fejlődésre és a támogató dojo-légkör kialakítására. A Takuma Dojo vezetőjeként hosszú évek óta aktív szerepet vállal a hazai aikidóéletben, rendszeresen szervez edzőtáborokat és népszerűsíti az aikidót Pécsen és a régióban. Az MKDE tagja és az MKDE technikai bizottságának tagja.</p>
+          <h3>Balázs Gábor</h3>
+          <span class="grade">Aikikai 5. dan</span>
+          <p>Rövid bemutatkozás: az <a href="https://budapestaikido.hu/" target="_blank" rel="noopener">Aikido Budapest Musubi dojo</a> vezetője, az <a href="https://mkde.hu/hu" target="_blank" rel="noopener">MKDE</a> technikai bizottságának és elnökségének tagja, az AikiKeiko sorozat egyik elindítója, szervezője.</p>
         </article>
       </div>
     </div>
@@ -771,6 +781,7 @@
         <h2>Korábbi plakátok és felvételek</h2>
       </div>
       <div class="archive-grid">
+        <div class="archive-item"><img src="images/archivum/202609.jpg" alt="2026-os szezonnyitó baráti aikido gyakorlás plakátja"><span>2026. szeptemberi szezonnyitó baráti aikido gyakorlás plakátja</span></div>
         <div class="archive-item"><img src="images/archivum/202601.jpg" alt="2026-os évnyitó baráti aikido gyakorlás plakátja"><span>2026. januári évnyitó baráti aikido gyakorlás plakátja</span></div>
         <div class="archive-item"><img src="images/archivum/202509.jpg" alt="2025-ös szezonnyitó baráti aikido gyakorlás plakátja"><span>2025. szeptemberi szezonnyitó baráti aikido gyakorlás plakátja</span></div>
         <div class="archive-item"><img src="images/archivum/202501.jpg" alt="2025-ös évnyitó baráti aikido gyakorlás plakátja"><span>2025. januári évnyitó baráti aikido gyakorlás plakátja</span></div>
